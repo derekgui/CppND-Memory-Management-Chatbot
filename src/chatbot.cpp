@@ -21,7 +21,7 @@ ChatBot::ChatBot()
 ChatBot::ChatBot(std::string filename)
 {
     std::cout << "ChatBot Constructor" << std::endl;
-    
+
     // invalidate data handles
     _chatLogic = nullptr;
     _rootNode = nullptr;
@@ -35,7 +35,7 @@ ChatBot::~ChatBot()
     std::cout << "ChatBot Destructor" << std::endl;
 
     // deallocate heap memory
-    if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
+    if (_image != NULL) // Attention: wxWidgets used NULL and not nullptr
     {
         delete _image;
         _image = NULL;
@@ -44,10 +44,75 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+ChatBot::ChatBot(const ChatBot &chatBot)
+{
+    std::cout << "CatBot Copy Constructor" << std::endl;
+    // Copy image into heap memory
+    _image = new wxBitmap(*(chatBot._image));
+
+    // invalidate data handles
+    _chatLogic = nullptr;
+    _rootNode = nullptr;
+}
+
+ChatBot &ChatBot::operator=(const ChatBot &chatBot)
+{
+    std::cout << "ChatBot Copy Assignment Operator" << std::endl;
+
+    if (this == &chatBot)
+        return *this;
+    // Attention: wxWidgets used NULL and not nullptr
+    if (_image != NULL)
+    {
+        delete _image;
+        _image = NULL;
+    }
+    // Copy image into heap memory
+    _image = new wxBitmap(*(chatBot._image));
+
+    // invalidate data handles
+    _chatLogic = nullptr;
+    _rootNode = nullptr;
+
+    return *this;
+}
+
+ChatBot::ChatBot(ChatBot &&chatBot)
+{
+    std::cout << "ChatBot Move Constructor" << std::endl;
+
+    _image = chatBot._image;
+
+    // invalidate data handles
+    _chatLogic = nullptr;
+    _rootNode = nullptr;
+
+    chatBot._image = nullptr;
+}
+
+ChatBot &ChatBot::operator=(ChatBot &&chatBot)
+{
+    std::cout << "ChatBot Move Assignment Operator" << std::endl;
+
+    if (this == &chatBot)
+        return *this;
+    // Attention: wxWidgets used NULL and not nullptr
+    if (_image != NULL)
+    {
+        delete _image;
+        _image = NULL;
+    }
+
+    _image = chatBot._image;
+    // invalidate data handles
+    _chatLogic = nullptr;
+    _rootNode = nullptr;
+
+    chatBot._image = nullptr;
+}
 
 ////
 //// EOF STUDENT CODE
-
 void ChatBot::ReceiveMessageFromUser(std::string message)
 {
     // loop over all edges and keywords and compute Levenshtein distance to query
