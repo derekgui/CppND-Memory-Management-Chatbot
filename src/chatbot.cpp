@@ -87,7 +87,8 @@ ChatBot::ChatBot(ChatBot &&chatBot)
     _chatLogic = nullptr;
     _rootNode = nullptr;
 
-    chatBot._image = nullptr;
+    //invalidate previous owner
+    chatBot._image = NULL;
 }
 
 ChatBot &ChatBot::operator=(ChatBot &&chatBot)
@@ -108,7 +109,7 @@ ChatBot &ChatBot::operator=(ChatBot &&chatBot)
     _chatLogic = nullptr;
     _rootNode = nullptr;
 
-    chatBot._image = nullptr;
+    chatBot._image = NULL;
 }
 
 ////
