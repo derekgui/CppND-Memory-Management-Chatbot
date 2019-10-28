@@ -106,10 +106,12 @@ ChatBot &ChatBot::operator=(ChatBot &&chatBot)
 
     _image = chatBot._image;
     // invalidate data handles
-    _chatLogic = nullptr;
-    _rootNode = nullptr;
+    _chatLogic = chatBot._chatLogic;
+    _rootNode = chatBot._rootNode;
 
     chatBot._image = NULL;
+    chatBot._chatLogic = nullptr;
+    chatBot._rootNode = nullptr;
 }
 
 ////
